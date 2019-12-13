@@ -55,8 +55,8 @@ public class Controller {
 
 			case 2:
 				System.out.println("--------- \nConversión del grafo inicial generado a un grafo con pesos: ");
-				dato = lector.next();
-
+				modelo.generarPesos();
+				
 				break;
 
 			case 3:

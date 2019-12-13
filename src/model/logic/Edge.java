@@ -32,7 +32,7 @@ public class Edge {
 	
 	@Override
 	public String toString() {
-		return "Arco [idInicio=" + idInicio + ", idFinal=" +  idFinal + ", costo= " + costo + "]";
+		return "("+getIdInicio()+"-"+getIdFinal()+") // Peso:"+getCosto();
 	}
 	
 }

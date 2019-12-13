@@ -1,4 +1,5 @@
 package model.logic;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import model.data_structures.Queue;
@@ -8,6 +9,7 @@ public class Vertex<I> implements Comparable<Vertex>
 	private Queue<Edge> edgeTo;
 	private Informacion info;
 	private boolean marked;
+	private ArrayList<Edge> arcos;
 	private int id;
 	private Queue<Vertex> adj = new Queue<Vertex>(); 
 
@@ -58,5 +60,13 @@ public class Vertex<I> implements Comparable<Vertex>
 	public int getId()
 	{
 		return id;
+	}
+
+	public ArrayList<Edge> darArcos() {
+		return arcos;
+	}
+
+	public void setArcos(Edge arco) {
+		arcos.add(arco);
 	}
 }

@@ -1,5 +1,6 @@
 package model.data_structures;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.logic.Edge;
@@ -19,6 +20,7 @@ public class Graph <K extends Comparable<K>, Val>
 	private LinearProbingHashST<K, Vertex> adj;
 	private LinearProbingHashST<K, Boolean> marked;
 	private LinearProbingHashST<K, Integer> cc;
+	private ArrayList<Vertex> vertices;
 	private int[] id;           // id[v] = id of connected component containing v
 	private int[] size;         // size[id] = number of vertices in given component
 	private int count;          // number of connected components
@@ -37,6 +39,7 @@ public class Graph <K extends Comparable<K>, Val>
 		adj = new LinearProbingHashST<>(V);
 		marked = new LinearProbingHashST<>(V);
 		cc = new LinearProbingHashST<>(V);
+		vertices= new ArrayList<>();
 	}
 
 	/**
@@ -46,6 +49,10 @@ public class Graph <K extends Comparable<K>, Val>
 	 */
 	public int V() {
 		return V;
+	}
+	
+	public ArrayList<Vertex> darVertices(){
+		return vertices;
 	}
 
 	/**
@@ -72,6 +79,7 @@ public class Graph <K extends Comparable<K>, Val>
 		String idv1 = String.valueOf(idVertexIni);
 		String idv2 = String.valueOf(idVertexFin);
 		Edge edge = new Edge(idv1, idv2, costoArco);
+		vertices.get((int) idVertexIni).setArcos(edge);
 		v1.getAdj().enqueue(v2);
 		v2.getAdj().enqueue(v1);
 		v1.getEdgeTos().enqueue(edge);
@@ -88,6 +96,7 @@ public class Graph <K extends Comparable<K>, Val>
 		String id = String.valueOf(idVertex);
 		Vertex nuevo = new Vertex((Informacion)infoVertex, Integer.parseInt(id));
 		adj.put(idVertex, nuevo);
+		vertices.add(nuevo);
 	}
 
 	/**
