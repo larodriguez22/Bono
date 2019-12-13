@@ -26,10 +26,6 @@ public class Vertex<I> implements Comparable<Vertex>
 		return edgeTo;
 	}
 	
-	public String toString() {
-		return "Vertice [id=" + id + ", longitud=" + info.getLon() + ", latitud=" + info.getLat()+ ", MOVEMENT_ID=" + info.getMovementID() + "]";
-	}
-
 	@Override
 	public int compareTo(Vertex o) {
 		// TODO Auto-generated method stub

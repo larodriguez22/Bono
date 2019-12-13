@@ -43,8 +43,6 @@ public class Controller {
 			switch(option){
 			case 1:
 				System.out.println("--------- \nCargar datos ");
-				int capacidad = lector.nextInt();
-
 				try {
 					modelo.cargarTxtHash();
 					modelo = new MVCModelo();
@@ -56,23 +54,17 @@ public class Controller {
 				break;
 
 			case 2:
-				System.out.println("--------- \nEsquema JSON para persistir el grafo: ");
+				System.out.println("--------- \nConversión del grafo inicial generado a un grafo con pesos: ");
 				dato = lector.next();
-				modelo.crearJson();
 
 				break;
 
 			case 3:
-				System.out.println("--------- \nCantidad de componentes conectados en el grafo: ");
-				modelo.cantidadComponentesConectados();					
+				System.out.println("--------- \nEncontrar el camino más corto entre dos vértices cualesquiera del grafo con pesos: ");
+								
 				break;
 
-			case 4:
-				System.out.println("--------- \nGrafica con ayuda de Google Maps: ");
-				modelo.graficaGoogleMaps();			
-				break;
-
-			case 5: 
+			case 4: 
 				System.out.println("--------- \n Hasta pronto !! \n---------"); 
 				lector.close();
 				fin = true;

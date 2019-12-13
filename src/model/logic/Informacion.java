@@ -1,31 +1,15 @@
 package model.logic;
 
 public class Informacion {
-	private double lat;
-	private double lon;
-	private int MOVEMENT_ID;
+	private String coordenada;
+	private int idVertice;
 
-	public Informacion(double plat, double plon, int pmove)
+	public Informacion(int idVertice, String coordenada )
 	{
-		lat = plat;
-		lon = plon;
-		MOVEMENT_ID=pmove;
+		this.setCoordenada(coordenada);
+		this.setIdVertice(idVertice);
 	}
 
-	public double getLat()
-	{
-		return lat;
-	}
-
-	public double getLon()
-	{
-		return lon;
-	}
-
-	public int getMovementID()
-	{
-		return MOVEMENT_ID;
-	}
 
 	public boolean marked() {
 		return true;
@@ -44,6 +28,26 @@ public class Informacion {
 	}
 
 	public String toString() {
-		return "Vertice [longitud=" + lon + ", latitud=" + lat + ", MOVEMENT_ID=" + MOVEMENT_ID + "]";
+		return "Vertice id" + idVertice + ", coordenadas" + coordenada;
+	}
+
+
+	public String getCoordenada() {
+		return coordenada;
+	}
+
+
+	public void setCoordenada(String coordenada) {
+		this.coordenada = coordenada;
+	}
+
+
+	public int getIdVertice() {
+		return idVertice;
+	}
+
+
+	public void setIdVertice(int idVertice) {
+		this.idVertice = idVertice;
 	}
 }

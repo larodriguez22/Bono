@@ -23,11 +23,16 @@ import com.google.gson.stream.JsonToken;
 
 public class MVCModelo<K> {
 
-	private Graph<Integer,Informacion> grafo;
+	public final static int MAX_COL=5;
 
-	private Vertex vertices;
+	private Graph<Integer,Informacion> grafo;
+	
+	private boolean matriz[][];
+
 	private Edge arcos;
 	private Informacion infos;
+	
+	
 
 	private Queue<Integer> ids = new Queue<>();
 	private Queue<String> values = new Queue<>();
@@ -40,103 +45,77 @@ public class MVCModelo<K> {
 
 	public void cargarTxtHash() throws IOException
 	{
-		int _arcos=0;
-		int _vertices=0;
-		String rutaE="./data/bogota_arcos.txt";
-		String rutaV="./data/bogota_vertices.txt";
+		grafo=new Graph<>(1000000);
+		matriz= new boolean[1000][10000];
+		String ruta="./data/datos.txt";
+		int vertices=0;
 		try{
 			// Abre el archivo utilizando un FileReader
-			FileReader reader = new FileReader(rutaE);
+			FileReader reader = new FileReader(ruta);
 			// Utiliza un BufferedReader para leer por líneas
 			BufferedReader lector = new BufferedReader( reader );   
 			// Lee línea por línea del archivo
 			String linea = lector.readLine( );
-			while(linea!=null)
-			{
-				// Parte la línea con cada coma
-				String[] partes = linea.split( " " );
-				for (int i = 1; i<partes.length;i++) {
-					System.out.println(Arrays.toString(partes));
-					arcos = new Edge(linea,partes[i],"0");
-					System.out.println(arcos.toString());
-				}
-				_arcos++;
-				linea=lector.readLine();
-			}
-			lector.close( );
-			reader.close( );
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		try{
-			// Abre el archivo utilizando un FileReader
-			FileReader reader = new FileReader(rutaV);
-			// Utiliza un BufferedReader para leer por líneas
-			BufferedReader lector = new BufferedReader( reader );   
-			// Lee línea por línea del archivo
-			String linea = lector.readLine( );
-			while(linea!=null)
-			{
-				// Parte la línea con cada coma
-				String[] partes = linea.split( " " );
-				infos = new Informacion(Double.parseDouble(partes[1]), Double.parseDouble(partes[2]), Integer.parseInt(partes[3]));
-				vertices = new Vertex(infos, Integer.parseInt(partes[0]));
-				_vertices++;
-				linea=lector.readLine();
-			}
-			lector.close( );
-			reader.close( );
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		System.out.println("La cantidad total de arcos es "+_arcos);
-		System.out.println("La cantidad total de vertices es "+_vertices);
-		// Cierra los lectores y devuelve el resultado
-	}
-
-	public void crearJson() {
-		// TODO Auto-generated method stub
-
-        Gson gson = new Gson();
-        // Java objects to File
-        try (FileWriter writer = new FileWriter("./data/data.json")) {
-            gson.toJson(grafo, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-	public void leerJson(){
-		Gson gson = new Gson();
-		String path = "./data/data.json";
-		JsonReader reader;
-		try {
-			reader = new JsonReader(new FileReader(path));
-			grafo = gson.fromJson(reader, Informacion.class);
+			int contadorFilas=0;
+			int contadorColumnas=0;
 			
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			while(linea!=null)
+			{
+				// Parte la línea con cada coma
+				for(int i=0; i<MAX_COL; i++)
+				{
+					char parte = linea.charAt(i);
+					if(parte=='1')
+					{
+						Informacion inf=new Informacion(vertices, contadorFilas+","+contadorColumnas);
+						grafo.addVertex(vertices, inf);
+						vertices++;
+						matriz[contadorFilas][contadorColumnas]=true;
+					}
+					else
+					{
+						matriz[contadorFilas][contadorColumnas]=false;
+					}
+					contadorColumnas++;
+				}
+				contadorFilas++;
+				linea=lector.readLine();
+			}
+			for(int i=0; i<contadorFilas; i++)
+			{
+				for(int j=0;j<contadorColumnas; j++)
+				{
+					if(matriz[i][j]==true)
+					{
+						if(i-1>=0&&matriz[i-1][j]==true)
+						{
+							System.out.println("("+i+","+j+")-("+(i-1)+","+j+")");
+						}
+						if(i+1<contadorFilas&&matriz[i+1][j]==true)
+						{
+							System.out.println("("+i+","+j+")-("+(i+1)+","+j+")");
+						}
+						if(j-1>=0&&matriz[i][j-1]==true)
+						{
+							System.out.println("("+i+","+j+")-("+i+","+(j-1)+")");
+						}
+						if(j+1<contadorColumnas&&matriz[i][j+1]==true)
+						{
+							System.out.println("("+i+","+j+")"+"-("+i+","+(j+1)+")");
+						}
+					}
+				}
+			}
+			lector.close( );
+			reader.close( );
+		}
+		catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
-
-	}
-	
-
-	public void cantidadComponentesConectados() {
-		// TODO Auto-generated method stub
-		grafo.CC();
-		//usa los metodos de cc y dfs juntos
-		System.out.println("Cantidad de componentes conexos: "+ grafo.ccn());
+		System.out.println("La cantidad total de vertices es "+vertices);
+		// Cierra los lectores y devuelve el resultado
 		
 	}
 
-	public void graficaGoogleMaps() {
-		// TODO Auto-generated method stub
-		
-	}
 }

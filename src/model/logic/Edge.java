@@ -5,6 +5,11 @@ public class Edge {
 	private int idFinal;
 	private double costo;
 	
+	public Edge(String coorInicio, String coorFinal) {
+		this.idInicio = Integer.parseInt(coorInicio);
+		this.idFinal = Integer.parseInt(coorFinal);
+	}
+	
 	public Edge(String idInicio, String idFinal, String pCosto) {
 		this.idInicio = Integer.parseInt(idInicio);
 		this.idFinal = Integer.parseInt(idFinal);
